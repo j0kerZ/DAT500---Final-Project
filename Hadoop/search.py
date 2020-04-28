@@ -4,11 +4,8 @@ import re
 from math import log
 
 NUM_DOC = 4220647
-DTEST = 999
 
 RE_WORD = re.compile(r"[\w']+")
-
-#["ID", "Body", "Title", "Tags"]
 
 class SofSearch(MRJob):
 
@@ -43,13 +40,15 @@ class SofSearch(MRJob):
       return
     words = RE_WORD.findall(row[1]) + RE_WORD.findall(row[2])
     for word in words:
-      yield (postid, row[3], row[2], word), 1
+      if len(word) >15:
+        return
+      yield (postid, row[3], word), 1
 
   def reducer1(self, post, count):
-    yield (post[0], post[1], post[2]), (post[3],sum(count))
+    yield (post[0], post[1]), (post[2],sum(count))
 
   def mapper2(self, post, word):
-    yield (post[0], post[2], post[1]), (word[0], word[1])
+    yield (post[0], post[1]), (word[0], word[1])
 
   def reducer2(self, post, words):
     N = 0
@@ -58,10 +57,10 @@ class SofSearch(MRJob):
       N += word[1]
       if word[0] in self.search:
         n += word[1]
-      yield word[0], (post[0], post[1], post[2], n, N)
+      yield word[0], (post[0], post[1], n, N)
 
   def mapper3(self, word, post):
-    yield word, (post[0], post[1], post[2], post[3], post[4])
+    yield word, (post[0], post[1], post[2], post[3])
 
   def reducer3(self, word, posts):
     if word in self.search:
@@ -71,11 +70,11 @@ class SofSearch(MRJob):
         d += 1
         ps.append(post)
       for post in ps:
-        yield (post[0], post[1], post[2]), (post[3], post[4], d)
+        yield (post[0], post[1]), (post[2], post[3], d)
 
   def mapper4(self, post, tfidf):
-    tf_idf = (float(tfidf[0]) / float(tfidf[1])) * log(DTEST / tfidf[2])
-    yield (post[0], post[1], post[2]), tf_idf
+    tf_idf = (float(tfidf[0]) / float(tfidf[1])) * log(NUM_DOC / tfidf[2])
+    yield (post[0], post[1]), tf_idf
 
   def reducer4(self, post, tfidf):
     tf_idf = 0
@@ -84,7 +83,7 @@ class SofSearch(MRJob):
       c += 1
       tf_idf += t
     tf_idf = (tf_idf / float(c))
-    yield (post[0], post[1], post[2]), tf_idf
+    yield (post[0], post[1]), tf_idf
 
 if __name__ == '__main__':
   SofSearch.run()

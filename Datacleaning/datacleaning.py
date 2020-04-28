@@ -14,13 +14,13 @@ re_url = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-
 def remove_htmltags(text): 
     compile1 = re.compile('<.*?>')
     compile2 = re.compile('&.*;')
-    text = re.sub(compile1, '', text)
+    text = re.sub(compile1, ' ', text)
     text = re.sub(compile2, ' ', text)
     return text.lower()
 
 def remove_chars(t): 
-    sub = re.sub(r'[?|!|"|#|:|=|+|_|{|}|[|]|-|$|%|^|&|]',r'',t)
-    clean = re.sub(r'[.|,|)|(|\|/|-|~|`|>|<|*|$|@|;|→]',r'',sub)
+    sub = re.sub(r'[?|!|"|#|:|=|+|_|{|}|[|]|-|$|%|^|&|]',r' ',t)
+    clean = re.sub(r'[.|,|)|(|\|/|-|~|`|>|<|*|$|@|;|→]',r' ',sub)
     return  clean
 
 def de_contract(phrase):
