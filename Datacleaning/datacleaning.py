@@ -59,7 +59,6 @@ with open(csvdataIn, "r+", encoding='utf-8') as csvIn:
 	with open(csvdataOut, "w+", encoding='utf-8') as csvOut:
 		writer = csv.DictWriter(csvOut, fieldnames=outcolumn)
 		writer.writeheader()
-		count = 0
 		for row in reader:
 			post = row[outcolumn[1]]
 			post = preprocess_post(post)

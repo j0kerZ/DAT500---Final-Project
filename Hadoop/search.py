@@ -2,6 +2,8 @@ from mrjob.job import MRJob
 from mrjob.step import MRStep
 import re
 from math import log
+from datetime import datetime
+import sys
 
 NUM_DOC = 4220647
 
@@ -16,9 +18,6 @@ class SofSearch(MRJob):
   def load_args(self, args):
     super(SofSearch, self).load_args(args)
     self.search = RE_WORD.findall(self.options.search.lower())
-
-  def extractkeywords(text):
-    return
 
   def steps(self):
     return[
@@ -40,9 +39,8 @@ class SofSearch(MRJob):
       return
     words = RE_WORD.findall(row[1]) + RE_WORD.findall(row[2])
     for word in words:
-      if len(word) >15:
-        return
-      yield (postid, row[3], word), 1
+      if len(word) <15:
+        yield (postid, row[3], word), 1
 
   def reducer1(self, post, count):
     yield (post[0], post[1]), (post[2],sum(count))
@@ -86,4 +84,10 @@ class SofSearch(MRJob):
     yield (post[0], post[1]), tf_idf
 
 if __name__ == '__main__':
+  if sys.argv[1][8:-4].isnumeric():
+    NUM_DOC = int(sys.argv[1][8:-4])
+  start_time = datetime.now()
   SofSearch.run()
+  end_time = datetime.now()
+  elapsed_time = end_time - start_time
+  sys.stderr.write(str(elapsed_time))
