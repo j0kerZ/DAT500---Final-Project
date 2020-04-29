@@ -1,9 +1,25 @@
-res
-				hadoop			local			MyPC
+search.py
 
-	1000		3m41s							5.8s
-	10000		3m34s							31.6s
-	100000										4m38s
-	1000000										50m27s
-	2000000										1h31m33s
-	4220647		
+	No of records						Execution time
+
+							hadoop			local			MyPC
+
+	1000					3m41s			5.8s			5.8s
+	10000					3m34s			58.1s			31.6s
+	100000					10m03s			8m52s			4m38s
+	1000000					1h43m24s		1h34m26s		50m27s
+	2000000					2h35m22s		Memory error	1h31m33s
+	4220647					4h23m35s		Memory error	Memory error
+
+recommend.py
+
+	No of records						Execution time
+
+							hadoop			local			MyPC
+
+	1000									0.6s			0.2s
+	10000									1.2s			0.8s	
+	100000									4.5s			2.8s
+	1000000									26.1s			18.6s
+	2000000									NoResult		25.7s
+	4220647									NoResult		NoResult
