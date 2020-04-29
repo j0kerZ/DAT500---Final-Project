@@ -42,7 +42,7 @@ def preprocessing_text(tt):
     return string
 
 def preprocess_post(post):
-    post = remove_htmltags(post)
+    post = remove_tags(post)
     post = re.sub(re_url, '', post)
     post = remove_chars(post)
     post = de_contract(post)
