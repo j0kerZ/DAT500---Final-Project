@@ -11,7 +11,7 @@ outcolumn	= [	"ID", "Body", "Title", "Tags"]
 
 re_url = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
-def remove_htmltags(text): 
+def remove_tags(text): 
     compile1 = re.compile('<.*?>')
     compile2 = re.compile('&.*;')
     text = re.sub(compile1, ' ', text)
