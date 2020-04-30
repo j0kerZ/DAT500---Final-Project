@@ -11,7 +11,7 @@ outcolumn	= [	"ID", "Body", "Title", "Tags"]
 
 re_url = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
-def remove_htmltags(text): 
+def remove_tags(text): 
     compile1 = re.compile('<.*?>')
     compile2 = re.compile('&.*;')
     text = re.sub(compile1, ' ', text)
@@ -42,7 +42,7 @@ def preprocessing_text(tt):
     return string
 
 def preprocess_post(post):
-    post = remove_htmltags(post)
+    post = remove_tags(post)
     post = re.sub(re_url, '', post)
     post = remove_chars(post)
     post = de_contract(post)
