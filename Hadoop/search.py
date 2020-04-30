@@ -55,6 +55,7 @@ class SofSearch(MRJob):
       N += word[1]
       if word[0] in self.search:
         n += word[1]
+    for word in words:
       yield word[0], (post[0], post[1], n, N)
 
   def mapper3(self, word, post):
