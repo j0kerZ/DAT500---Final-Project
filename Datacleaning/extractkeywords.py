@@ -24,6 +24,9 @@ def extract_keywords(text):
 		p = str(p)
 	return p
 
+def extract_keywords(text):
+
+
 def ranker(queue, row):
 	out = []
 	out.append(row[incolumn[0]])

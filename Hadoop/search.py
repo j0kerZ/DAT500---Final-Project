@@ -84,8 +84,8 @@ class SofSearch(MRJob):
     yield (post[0], post[1]), tf_idf
 
 if __name__ == '__main__':
-  if sys.argv[1].replace('hdfs:///','').replace('.csv','').isnumeric():
-    NUM_DOC = int(sys.argv[1].replace('hdfs:///','').replace('.csv',''))
+  if sys.argv[1].replace('hdfs:///','').replace('.csv','').replace('../','').isnumeric():
+    NUM_DOC = int(sys.argv[1].replace('hdfs:///','').replace('../','').replace('.csv',''))
 
   start_time = datetime.now()
   SofSearch.run()
